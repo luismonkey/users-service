@@ -15,14 +15,14 @@ use App\Http\Controllers\Api\V1\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+}); */
 
 
 Route::prefix('v1/auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login',    [AuthController::class, 'login']);
-    Route::post('logout',   [AuthController::class, 'logout'])->middleware('auth:api');
-    Route::get('me',        [AuthController::class, 'me'])->middleware('auth:api');
+    Route::post('logout',   [AuthController::class, 'logout'])->middleware('jwt.verify');
+    Route::get('me',        [AuthController::class, 'me'])->middleware('jwt.verify');
 });
